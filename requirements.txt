@@ -2,7 +2,7 @@
 sentence-transformers==2.2.2
 
 # Backend dependencies
-torch==2.2.2+cpu
+torch>=1.12
 transformers>=4.6.0,<5.0.0
 scikit-learn
 scipy
