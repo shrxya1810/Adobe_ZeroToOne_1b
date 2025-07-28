@@ -167,21 +167,146 @@ The system is evaluated on:
 - **Efficiency**: Processing time within 60-second constraint
 - **Accuracy**: Semantic understanding of persona and task requirements
 
-## Approach Explanation
+## Deliverables
 
-The system uses a three-stage pipeline:
+### 1. approach_explanation.md
+A detailed methodology document (300-500 words) explaining the technical approach, available in the root directory.
 
-1. **Document Parsing**: Extracts structured sections from PDFs with page numbers and titles
-2. **Semantic Ranking**: Uses sentence transformers to compute relevance scores based on persona and task
-3. **Output Generation**: Formats ranked sections into the required JSON structure with metadata
+### 2. Execution Instructions
 
-The ranking algorithm employs:
-- **Query Building**: Creates context-aware queries from persona and task
-- **Similarity Scoring**: Cosine similarity between query and content embeddings
-- **Diversity Optimization**: Penalizes duplicate document selections
-- **Quality Filtering**: Removes short or generic content sections
+#### Prerequisites
+- Python 3.10 or higher
+- Docker (for containerized execution)
+- 4GB RAM minimum (for model loading)
+- CPU with 4+ cores recommended
 
-This approach ensures the system can handle diverse document types, personas, and tasks while maintaining high relevance and performance within the specified constraints.
+#### Local Development Setup
+
+1. **Clone and Navigate**:
+   ```bash
+   cd /path/to/project
+   ```
+
+2. **Create Virtual Environment** (recommended):
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Verify Installation**:
+   ```bash
+   python -c "import torch; import sentence_transformers; print('Setup successful!')"
+   ```
+
+#### Running the Analysis
+
+1. **Process All Collections**:
+   ```bash
+   python main.py
+   ```
+
+2. **Process Specific Collection** (modify main.py):
+   ```python
+   # Edit COLLECTIONS in main.py to process only specific collections
+   COLLECTIONS = {
+       "Collection 1": "Challenge_1b/Collection 1"
+   }
+   ```
+
+3. **Custom Input** (for testing):
+   ```bash
+   # Create custom input JSON following the format in Collection 1/2/3
+   python main.py
+   ```
+
+#### Docker Deployment
+
+1. **Build Image**:
+   ```bash
+   docker build -t persona-document-intelligence .
+   ```
+
+2. **Run Container**:
+   ```bash
+   docker run -v $(pwd)/Challenge_1b:/app/Challenge_1b persona-document-intelligence
+   ```
+
+3. **Verify Output**:
+   ```bash
+   # Check generated output files
+   ls Challenge_1b/*/challenge1b_output.json
+   ```
+
+#### Performance Monitoring
+
+1. **Memory Usage**:
+   ```bash
+   # Monitor during execution
+   htop  # or top on Linux
+   ```
+
+2. **Processing Time**:
+   ```bash
+   time python main.py
+   ```
+
+3. **Model Loading**:
+   ```bash
+   # First run will download model (~80MB)
+   # Subsequent runs use cached model
+   ```
+
+#### Troubleshooting
+
+1. **Memory Issues**:
+   - Ensure 4GB+ RAM available
+   - Close other applications
+   - Use smaller batch sizes in ranker.py
+
+2. **Model Download Issues**:
+   - Check internet connection for initial download
+   - Verify ~/.cache/torch/hub/ directory exists
+
+3. **PDF Processing Errors**:
+   - Ensure PDFs are not password-protected
+   - Check file permissions
+   - Verify PDF format compatibility
+
+#### Output Validation
+
+1. **Check JSON Structure**:
+   ```bash
+   python -c "import json; data=json.load(open('Challenge_1b/Collection 1/challenge1b_output.json')); print('Valid JSON structure')"
+   ```
+
+2. **Compare with Expected Outputs**:
+   ```bash
+   # Compare with files in Expected Outputs/ directory
+   diff Challenge_1b/Collection 1/challenge1b_output.json Expected Outputs/challenge1b_output_expected_coll1.json
+   ```
+
+#### Custom Configuration
+
+1. **Model Selection** (in modules/ranker.py):
+   ```python
+   # Change model for different performance/size trade-offs
+   model = SentenceTransformer("all-MiniLM-L6-v2")  # 80MB, fast
+   # model = SentenceTransformer("all-mpnet-base-v2")  # 420MB, more accurate
+   ```
+
+2. **Ranking Parameters** (in modules/ranker.py):
+   ```python
+   # Adjust diversity penalty
+   doc_penalty = 0.05  # Increase for more diversity
+   
+   # Modify content filtering
+   if len(section['content']) < 100:  # Adjust minimum length
+   ```
 
 ---
 
