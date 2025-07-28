@@ -1,5 +1,6 @@
 # Core semantic ranking engine
 sentence-transformers==2.2.2
+huggingface_hub<=0.14.1  
 
 # Backend dependencies
 torch>=1.12

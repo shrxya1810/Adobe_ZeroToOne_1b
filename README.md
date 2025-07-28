@@ -9,11 +9,13 @@ This system acts as an intelligent document analyst, extracting and prioritizing
 ### Challenge Brief
 
 You will build a system that processes diverse document collections and extracts the most relevant content based on:
+
 - **Document Collection**: 3-10 related PDFs
-- **Persona Definition**: Role description with specific expertise and focus areas  
+- **Persona Definition**: Role description with specific expertise and focus areas
 - **Job-to-be-Done**: Concrete task the persona needs to accomplish
 
 The solution must be generic to handle diverse scenarios:
+
 - **Documents**: Research papers, textbooks, financial reports, news articles, etc.
 - **Personas**: Researcher, Student, Salesperson, Journalist, Entrepreneur, etc.
 - **Jobs-to-be-Done**: Literature reviews, exam preparation, financial analysis, etc.
@@ -21,16 +23,19 @@ The solution must be generic to handle diverse scenarios:
 ## Sample Test Cases
 
 ### Test Case 1: Academic Research
+
 - **Documents**: 4 research papers on "Graph Neural Networks for Drug Discovery"
 - **Persona**: PhD Researcher in Computational Biology
 - **Job**: "Prepare a comprehensive literature review focusing on methodologies, datasets, and performance benchmarks"
 
 ### Test Case 2: Business Analysis
+
 - **Documents**: 3 annual reports from competing tech companies (2022-2024)
 - **Persona**: Investment Analyst
 - **Job**: "Analyze revenue trends, R&D investments, and market positioning strategies"
 
 ### Test Case 3: Educational Content
+
 - **Documents**: 5 chapters from organic chemistry textbooks
 - **Persona**: Undergraduate Chemistry Student
 - **Job**: "Identify key concepts and mechanisms for exam preparation on reaction kinetics"
@@ -38,6 +43,7 @@ The solution must be generic to handle diverse scenarios:
 ## Technical Requirements
 
 ### Constraints
+
 - **CPU Only**: No GPU acceleration allowed
 - **Model Size**: ≤ 1GB
 - **Processing Time**: ≤ 60 seconds for document collection (3-5 documents)
@@ -121,6 +127,7 @@ The system consists of three main modules:
 ### Local Development
 
 1. **Install Dependencies**:
+
    ```bash
    pip install -r requirements.txt
    ```
@@ -133,28 +140,35 @@ The system consists of three main modules:
 ### Docker Deployment
 
 1. **Build Container**:
+
    ```bash
    docker build -t persona-document-intelligence .
    ```
 
 2. **Run Analysis**:
+
    ```bash
-   docker run persona-document-intelligence
+   docker run --rm -v $(pwd)/Challenge_1b:/app/Challenge_1b --network none persona-document-intelligence
    ```
+
+   The output will be generated in `Challenge_1b/Collection_x/challenge1b_output.json` where x is collection number (1-3)
 
 ## Test Collections
 
 ### Collection 1: Travel Planning
+
 - **Persona**: Travel Planner
 - **Task**: Plan a 4-day trip for 10 college friends to South of France
 - **Documents**: 7 travel guides covering cities, cuisine, history, restaurants, activities, tips, and culture
 
 ### Collection 2: Adobe Acrobat Learning
+
 - **Persona**: HR Professional
 - **Task**: Create and manage fillable forms for onboarding and compliance
 - **Documents**: 15 Acrobat guides covering creation, editing, exporting, AI features, e-signatures, and sharing
 
 ### Collection 3: Recipe Collection
+
 - **Persona**: Food Contractor
 - **Task**: Prepare vegetarian buffet-style dinner menu for corporate gathering
 - **Documents**: 9 cooking guides covering breakfast, lunch, dinner mains, and sides
@@ -162,152 +176,29 @@ The system consists of three main modules:
 ## Performance Metrics
 
 The system is evaluated on:
+
 - **Relevance**: How well extracted sections match the persona's needs
 - **Completeness**: Coverage of important information across documents
 - **Efficiency**: Processing time within 60-second constraint
 - **Accuracy**: Semantic understanding of persona and task requirements
 
-## Deliverables
+## Approach Explanation
 
-### 1. approach_explanation.md
-A detailed methodology document (300-500 words) explaining the technical approach, available in the root directory.
+The system uses a three-stage pipeline:
 
-### 2. Execution Instructions
+1. **Document Parsing**: Extracts structured sections from PDFs with page numbers and titles
+2. **Semantic Ranking**: Uses sentence transformers to compute relevance scores based on persona and task
+3. **Output Generation**: Formats ranked sections into the required JSON structure with metadata
 
-#### Prerequisites
-- Python 3.10 or higher
-- Docker (for containerized execution)
-- 4GB RAM minimum (for model loading)
-- CPU with 4+ cores recommended
+The ranking algorithm employs:
 
-#### Local Development Setup
+- **Query Building**: Creates context-aware queries from persona and task
+- **Similarity Scoring**: Cosine similarity between query and content embeddings
+- **Diversity Optimization**: Penalizes duplicate document selections
+- **Quality Filtering**: Removes short or generic content sections
 
-1. **Clone and Navigate**:
-   ```bash
-   cd /path/to/project
-   ```
-
-2. **Create Virtual Environment** (recommended):
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Verify Installation**:
-   ```bash
-   python -c "import torch; import sentence_transformers; print('Setup successful!')"
-   ```
-
-#### Running the Analysis
-
-1. **Process All Collections**:
-   ```bash
-   python main.py
-   ```
-
-2. **Process Specific Collection** (modify main.py):
-   ```python
-   # Edit COLLECTIONS in main.py to process only specific collections
-   COLLECTIONS = {
-       "Collection 1": "Challenge_1b/Collection 1"
-   }
-   ```
-
-3. **Custom Input** (for testing):
-   ```bash
-   # Create custom input JSON following the format in Collection 1/2/3
-   python main.py
-   ```
-
-#### Docker Deployment
-
-1. **Build Image**:
-   ```bash
-   docker build -t persona-document-intelligence .
-   ```
-
-2. **Run Container**:
-   ```bash
-   docker run -v $(pwd)/Challenge_1b:/app/Challenge_1b persona-document-intelligence
-   ```
-
-3. **Verify Output**:
-   ```bash
-   # Check generated output files
-   ls Challenge_1b/*/challenge1b_output.json
-   ```
-
-#### Performance Monitoring
-
-1. **Memory Usage**:
-   ```bash
-   # Monitor during execution
-   htop  # or top on Linux
-   ```
-
-2. **Processing Time**:
-   ```bash
-   time python main.py
-   ```
-
-3. **Model Loading**:
-   ```bash
-   # First run will download model (~80MB)
-   # Subsequent runs use cached model
-   ```
-
-#### Troubleshooting
-
-1. **Memory Issues**:
-   - Ensure 4GB+ RAM available
-   - Close other applications
-   - Use smaller batch sizes in ranker.py
-
-2. **Model Download Issues**:
-   - Check internet connection for initial download
-   - Verify ~/.cache/torch/hub/ directory exists
-
-3. **PDF Processing Errors**:
-   - Ensure PDFs are not password-protected
-   - Check file permissions
-   - Verify PDF format compatibility
-
-#### Output Validation
-
-1. **Check JSON Structure**:
-   ```bash
-   python -c "import json; data=json.load(open('Challenge_1b/Collection 1/challenge1b_output.json')); print('Valid JSON structure')"
-   ```
-
-2. **Compare with Expected Outputs**:
-   ```bash
-   # Compare with files in Expected Outputs/ directory
-   diff Challenge_1b/Collection 1/challenge1b_output.json Expected Outputs/challenge1b_output_expected_coll1.json
-   ```
-
-#### Custom Configuration
-
-1. **Model Selection** (in modules/ranker.py):
-   ```python
-   # Change model for different performance/size trade-offs
-   model = SentenceTransformer("all-MiniLM-L6-v2")  # 80MB, fast
-   # model = SentenceTransformer("all-mpnet-base-v2")  # 420MB, more accurate
-   ```
-
-2. **Ranking Parameters** (in modules/ranker.py):
-   ```python
-   # Adjust diversity penalty
-   doc_penalty = 0.05  # Increase for more diversity
-   
-   # Modify content filtering
-   if len(section['content']) < 100:  # Adjust minimum length
-   ```
+This approach ensures the system can handle diverse document types, personas, and tasks while maintaining high relevance and performance within the specified constraints.
 
 ---
 
-**Note**: This implementation meets all technical requirements including CPU-only processing, model size constraints, and offline operation while providing robust semantic analysis capabilities. 
+**Note**: This implementation meets all technical requirements including CPU-only processing, model size constraints, and offline operation while providing robust semantic analysis capabilities.

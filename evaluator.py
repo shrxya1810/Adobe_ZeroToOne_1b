@@ -24,7 +24,7 @@ EXPECTED_MAP = {
 # -----------------------------
 rouge = rouge_scorer.RougeScorer(['rougeL'], use_stemmer=True)
 smooth_fn = SmoothingFunction().method4
-sbert_model = SentenceTransformer("all-MiniLM-L6-v2")
+sbert_model = SentenceTransformer("./models/all-MiniLM-L6-v2")
 
 
 # -----------------------------
