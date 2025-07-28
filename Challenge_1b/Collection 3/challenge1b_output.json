@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "input_documents": [
+      "Breakfast Ideas.pdf",
+      "Dinner Ideas - Mains_1.pdf",
+      "Dinner Ideas - Mains_2.pdf",
+      "Dinner Ideas - Mains_3.pdf",
+      "Dinner Ideas - Sides_1.pdf",
+      "Dinner Ideas - Sides_2.pdf",
+      "Dinner Ideas - Sides_3.pdf",
+      "Dinner Ideas - Sides_4.pdf",
+      "Lunch Ideas.pdf"
+    ],
+    "persona": "Food Contractor",
+    "job_to_be_done": "Prepare a vegetarian buffet-style dinner menu for a corporate gathering, including gluten-free items.",
+    "timestamp": "2025-07-28T22:04:29.159176"
+  },
+  "extracted_sections": [
+    {
+      "document": "Dinner Ideas - Sides_1.pdf",
+      "section_title": "o Mix ground beef, ground pork, diced onion, minced garlic, breadcrumbs, beaten",
+      "importance_rank": 1,
+      "page_number": 3
+    },
+    {
+      "document": "Dinner Ideas - Mains_1.pdf",
+      "section_title": "Shredded lettuce, diced tomatoes, shredded cheese, sour cream, and salsa for toppings",
+      "importance_rank": 2,
+      "page_number": 5
+    },
+    {
+      "document": "Dinner Ideas - Sides_2.pdf",
+      "section_title": "o Drain on paper towels and serve.",
+      "importance_rank": 3,
+      "page_number": 8
+    },
+    {
+      "document": "Dinner Ideas - Sides_4.pdf",
+      "section_title": "Pan con Tomate",
+      "importance_rank": 4,
+      "page_number": 1
+    },
+    {
+      "document": "Breakfast Ideas.pdf",
+      "section_title": "Cottage Cheese and Veggie Bowl",
+      "importance_rank": 5,
+      "page_number": 16
+    }
+  ],
+  "subsection_analysis": [
+    {
+      "document": "Dinner Ideas - Sides_1.pdf",
+      "refined_text": "o Add potatoes and cauliflower, stir to coat with spices o Cover and cook until vegetables are tender, stirring occasionally o Mix ground beef, ground pork, diced onion, minced garlic, breadcrumbs, beaten o Heat olive oil in a pan and brown meatballs on all sides o Arrange meats, cheeses, olives, and vegetables on a platter.",
+      "page_number": 3
+    },
+    {
+      "document": "Dinner Ideas - Mains_1.pdf",
+      "refined_text": "Shredded lettuce, diced tomatoes, shredded cheese, sour cream, and salsa for toppings In a skillet, cook ground beef over medium heat until browned Add diced onion and minced garlic, saut\u00e9 until softened Stir in taco seasoning and water, simmer until thickened Serve beef mixture in taco shells or tortillas with desired toppings",
+      "page_number": 5
+    },
+    {
+      "document": "Dinner Ideas - Sides_2.pdf",
+      "refined_text": "o Saut\u00e9 diced bacon, onion, and minced garlic in butter until crispy o Add cassava flour and cook, stirring constantly, until golden o Toast pita breads until crispy, then break into pieces o Whisk lemon juice, olive oil, sumac, and salt, then pour over salad.",
+      "page_number": 8
+    },
+    {
+      "document": "Dinner Ideas - Sides_4.pdf",
+      "refined_text": "o Add noodles, fish sauce, tamarind paste, sugar, and lime juice, stir to combine o Add bean sprouts, cooked shrimp, and chopped green onions",
+      "page_number": 1
+    },
+    {
+      "document": "Breakfast Ideas.pdf",
+      "refined_text": "In a bowl, combine cottage cheese, cucumber, cherry tomatoes, and bell pepper",
+      "page_number": 16
+    }
+  ]
+}

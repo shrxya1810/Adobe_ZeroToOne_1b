@@ -1,0 +1,4 @@
+Collection,Section_Title_Jaccard,Summary_ROUGE-L,Summary_BLEU
+Collection 1,0.1111,0.1058,0.005
+Collection 2,0.1111,0.1662,0.0211
+Collection 3,0.0,0.1246,0.0106
